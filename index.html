@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protótipo - ERP Logístico B2B</title>
+    <title>Protótipo - ERP Logístico & Auditoria B2B</title>
     <style>
         /* Reset e Estilos Base */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
@@ -14,194 +14,222 @@
         .nav-btn { background-color: #2c3e50; color: white; border: 1px solid #7f8c8d; padding: 8px 15px; cursor: pointer; border-radius: 4px; transition: all 0.3s; margin-left: 10px; }
         .nav-btn:hover, .nav-btn.active { background-color: #1abc9c; border-color: #1abc9c; font-weight: bold; }
 
-        /* Container de Views */
+        /* Container de Views Principais */
         .view { display: none; animation: fadeIn 0.4s; }
         .view.active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- VISÃO DA EMPRESA (Layout com Sidebar) --- */
+        /* --- VISÃO DA EMPRESA (ERP com Sidebar) --- */
         #view-empresa { height: calc(100vh - 60px); }
-        
-        /* Menu Lateral */
         .sidebar { width: 250px; background-color: #2c3e50; color: white; display: flex; flex-direction: column; padding-top: 20px; }
         .menu-item { padding: 15px 20px; cursor: pointer; border-left: 4px solid transparent; transition: all 0.2s; font-size: 1.05rem; }
         .menu-item:hover { background-color: #34495e; border-left-color: #1abc9c; }
         .menu-item.active { background-color: #34495e; border-left-color: #1abc9c; font-weight: bold; }
-        
-        /* Área de Conteúdo */
         .main-content { flex: 1; padding: 30px; overflow-y: auto; }
         .subview { display: none; animation: fadeIn 0.3s; }
         .subview.active { display: block; }
 
-        /* Elementos UI Genéricos */
+        /* Estilos Comuns (Cards, Botões, Forms) */
         .card-panel { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
         h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; }
-        .btn-action { background-color: #2980b9; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+        .btn-action { background-color: #2980b9; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; transition: background 0.3s; width: 100%; box-sizing: border-box; }
         .btn-action:hover { background-color: #2471a3; }
         .btn-success { background-color: #27ae60; }
         .btn-success:hover { background-color: #229954; }
-
-        /* Tabelas */
+        
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
         th { background-color: #ecf0f1; color: #2c3e50; }
         
-        /* Formulários */
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #34495e; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #34495e; font-size: 0.9rem;}
         .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #bdc3c7; border-radius: 4px; box-sizing: border-box; }
-        .form-row { display: flex; gap: 15px; }
-        .form-row .form-group { flex: 1; }
 
-        /* --- VISÃO DO CLIENTE (Mockup Mobile mantido simples) --- */
-        #view-cliente { justify-content: center; padding: 30px; }
-        .mobile-mockup { width: 100%; max-width: 380px; border: 12px solid #2c3e50; border-radius: 30px; overflow: hidden; background: #f4f7f6; min-height: 600px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .mobile-header { background: #2980b9; color: white; padding: 30px 20px 20px; text-align: center; }
-        .mobile-content { padding: 20px; text-align: center; }
-        .btn-confirm { background-color: #27ae60; color: white; border: none; padding: 16px; width: 100%; font-size: 1.1rem; border-radius: 8px; cursor: pointer; margin-top: 20px;}
+        /* --- VISÃO DO CLIENTE (Mockup Mobile com Foco em Auditoria) --- */
+        #view-cliente { justify-content: center; padding: 20px; }
+        .mobile-mockup { 
+            width: 100%; max-width: 380px; border: 12px solid #2c3e50; border-radius: 30px; 
+            overflow: hidden; background: #f4f7f6; height: 680px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; position: relative;
+        }
+        .mobile-header { background: #2980b9; color: white; padding: 25px 20px 15px; text-align: center; }
+        
+        .mobile-content-area { flex: 1; overflow-y: auto; padding: 15px; padding-bottom: 70px; }
+        .mobile-subview { display: none; animation: fadeIn 0.3s; }
+        .mobile-subview.active { display: block; }
+
+        .mobile-card { background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin-bottom: 15px; text-align: center; }
+        .status-badge { display: inline-block; padding: 5px 10px; background: #fdebd0; color: #d35400; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;}
+        .status-badge.ok { background: #d5f5e3; color: #27ae60; }
+        
+        /* Box de Informação de Auditoria */
+        .audit-info-box { background-color: #e8f8f5; border: 1px dashed #1abc9c; padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9rem; color: #16a085;}
+
+        /* Menu Inferior (Bottom Navigation) */
+        .mobile-bottom-nav {
+            position: absolute; bottom: 0; left: 0; width: 100%; background: white;
+            display: flex; justify-content: space-around; padding: 10px 0;
+            border-top: 1px solid #ecf0f1; box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        .mobile-nav-item { text-align: center; color: #7f8c8d; cursor: pointer; flex: 1; font-size: 0.85rem; padding: 5px 0; }
+        .mobile-nav-item.active { color: #2980b9; font-weight: bold; }
+        .nav-icon { display: block; font-size: 1.4rem; margin-bottom: 2px; }
     </style>
 </head>
 <body>
 
+    <!-- TOPBAR -->
     <header>
-        <h1>Logística Inteligente B2B - Módulo Admin</h1>
+        <h1>Logística Inteligente B2B - Painel de Controle</h1>
         <div>
             <button class="nav-btn active" onclick="switchMainView('empresa', this)">Visão Empresa (ERP)</button>
             <button class="nav-btn" onclick="switchMainView('cliente', this)">Simulador App Cliente</button>
         </div>
     </header>
 
+    <!-- ========================================== -->
+    <!-- VISÃO DA EMPRESA (Dashboard Operacional)   -->
+    <!-- ========================================== -->
     <div id="view-empresa" class="view active">
-        
         <aside class="sidebar">
             <div class="menu-item active" onclick="switchMenu('dashboard', this)">📊 Dashboard Roteirização</div>
             <div class="menu-item" onclick="switchMenu('cadastro', this)">🏢 Cadastrar Cliente</div>
-            <div class="menu-item" onclick="switchMenu('relatorios', this)">📈 Relatórios e Estoque</div>
+            <div class="menu-item" onclick="switchMenu('relatorios', this)">🔎 Auditorias Recebidas</div>
         </aside>
 
         <main class="main-content">
-            
+            <!-- TELA 1: DASHBOARD -->
             <div id="subview-dashboard" class="subview active">
                 <div class="card-panel">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <h2 style="border: none; margin: 0;">Monitoramento e Rotas Just-in-Time</h2>
-                        <button class="btn-action btn-success" onclick="alert('Integração com Google Maps API iniciada. Rota otimizada gerada com sucesso!')">Gerar Rota Preditiva</button>
+                        <h2 style="border: none; margin: 0;">Monitoramento Preditivo de Rotas</h2>
+                        <button class="btn-action btn-success" style="width: auto;" onclick="alert('Rota gerada integrando os dados das últimas auditorias!')">Gerar Rota de Abastecimento</button>
                     </div>
                     <table>
-                        <thead>
-                            <tr>
-                                <th>Cliente</th>
-                                <th>Produto</th>
-                                <th>Estoque Estimado</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>Cliente</th><th>Produto</th><th>Última Auditoria Física</th><th>Status de Risco</th></tr></thead>
                         <tbody>
-                            <tr><td>Supermercado Centro</td><td>Ovos Brancos</td><td>2 Caixas</td><td style="color: #c0392b; font-weight: bold;">Crítico</td></tr>
-                            <tr><td>Agropecuária Cerrado</td><td>Vacina Bovina</td><td>15 Doses</td><td style="color: #d35400; font-weight: bold;">Atenção</td></tr>
+                            <tr><td>Supermercado Centro</td><td>Ovos Brancos</td><td>Há 4 horas (Confirmado 2 cx)</td><td style="color: #c0392b; font-weight: bold;">Crítico (Abastecer Hoje)</td></tr>
+                            <tr><td>Agropecuária Cerrado</td><td>Vacina Bovina</td><td>Ontem (Confirmado 15 doses)</td><td style="color: #d35400; font-weight: bold;">Atenção</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
+            <!-- TELA 2: CADASTRO -->
             <div id="subview-cadastro" class="subview">
                 <div class="card-panel">
                     <h2>Novo Cliente Comercial</h2>
-                    <p style="color: #7f8c8d; margin-top: -10px; margin-bottom: 20px;">Cadastre os dados para que o sistema gere as coordenadas de entrega automaticamente.</p>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Razão Social / Nome do Comércio</label>
-                            <input type="text" placeholder="Ex: Mercearia da Praça LTDA">
-                        </div>
-                        <div class="form-group">
-                            <label>CNPJ</label>
-                            <input type="text" placeholder="00.000.000/0000-00">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Endereço Completo (Para cálculo de rota via API Maps)</label>
-                        <input type="text" placeholder="Rua, Número, Bairro, Cidade - Estado">
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Capacidade Máxima de Armazenagem</label>
-                            <select>
-                                <option>Pequeno (Até 50 caixas)</option>
-                                <option>Médio (Até 200 caixas)</option>
-                                <option>Grande (Galpão Próprio)</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Condição do Armazém</label>
-                            <select>
-                                <option>Sem Refrigeração (Urgência Alta)</option>
-                                <option>Refrigerado (Estável)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button class="btn-action" onclick="alert('Cliente cadastrado com sucesso! As coordenadas geográficas foram vinculadas.')">Salvar Cliente</button>
+                    <div class="form-group"><label>Razão Social</label><input type="text" placeholder="Ex: Comercial Mineiros"></div>
+                    <div class="form-group"><label>Endereço de Entrega</label><input type="text" placeholder="Rua Coberta, Centro, Mineiros - GO"></div>
+                    <button class="btn-action" style="width: 200px;">Salvar no Banco Centralizado</button>
                 </div>
             </div>
 
+            <!-- TELA 3: RELATÓRIO DE AUDITORIAS -->
             <div id="subview-relatorios" class="subview">
                 <div class="card-panel">
-                    <h2>Relatórios de Desempenho e Estoque</h2>
-                    
-                    <div class="form-row" style="margin-bottom: 20px;">
-                        <div class="form-group">
-                            <label>Filtrar por Período</label>
-                            <select><option>Últimos 7 dias</option><option>Este Mês</option></select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tipo de Relatório</label>
-                            <select><option>Giro de Estoque (Produtos Perto do Vencimento)</option><option>Volume de Vendas</option><option>Índice de Perdas Evitadas</option></select>
-                        </div>
-                    </div>
-
-                    <button class="btn-action" style="margin-bottom: 20px;">Gerar Relatório</button>
-
-                    <table style="border: 1px solid #bdc3c7;">
+                    <h2>Histórico de Auditoria e Divergências (Segurança Alimentar)</h2>
+                    <p style="color: #7f8c8d;">Este relatório cruza o que o sistema calculou com o que o cliente contou fisicamente. Divergências altas indicam que o produto está estragando ou que há perdas na armazenagem do cliente.</p>
+                    <table>
                         <thead style="background-color: #34495e; color: white;">
-                            <tr>
-                                <th>Produto</th>
-                                <th>Saída Média Diária</th>
-                                <th>Estoque Global Retido nos Clientes</th>
-                                <th>Risco de Perda (Validade)</th>
-                            </tr>
+                            <tr><th>Cliente</th><th>Produto</th><th>Cálculo do Sistema</th><th>Contagem Real (Auditoria)</th><th>Divergência / Perda</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>Ovos Brancos (Cx 30)</td><td>120 caixas/dia</td><td>450 caixas</td><td style="color: #27ae60;">Baixo (Sendo consumido rápido)</td></tr>
-                            <tr><td>Vacina Bovina</td><td>15 doses/dia</td><td>80 doses</td><td style="color: #d35400;">Médio</td></tr>
-                            <tr><td>Ração Leiteira (Saco 40kg)</td><td>5 sacos/dia</td><td>60 sacos</td><td style="color: #c0392b;">Alto (Estoque encalhado)</td></tr>
+                            <tr><td>Supermercado Centro</td><td>Ovos Brancos</td><td>6 Caixas</td><td>2 Caixas</td><td style="color: #c0392b; font-weight: bold;">-4 Caixas (Verificar Quebra/Calor)</td></tr>
+                            <tr><td>Agropecuária Cerrado</td><td>Vacina Bovina</td><td>15 Doses</td><td>15 Doses</td><td style="color: #27ae60; font-weight: bold;">0 (Perfeito)</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </main>
     </div>
 
+    <!-- ========================================== -->
+    <!-- VISÃO DO CLIENTE (App de Auditoria Mobile) -->
+    <!-- ========================================== -->
     <div id="view-cliente" class="view">
         <div class="mobile-mockup">
+            
             <div class="mobile-header">
-                <h2 style="margin:0;">App do Cliente</h2>
+                <h3 style="margin:0; font-size: 1.1rem;">Supermercado Centro</h3>
+                <span style="font-size: 0.8rem; opacity: 0.8;">Módulo de Auditoria de Prateleira</span>
             </div>
-            <div class="mobile-content">
-                <h3 style="color: #2c3e50;">Conferência Rápida</h3>
-                <p>O sistema estima que você possui:</p>
-                <h1 style="color: #2980b9; font-size: 3rem; margin: 10px 0;">2</h1>
-                <p>Caixas de Ovos</p>
-                <button class="btn-confirm" onclick="alert('Estoque validado! Abastecimento programado para amanhã.')">Confirmar Estoque</button>
+            
+            <div class="mobile-content-area">
+                
+                <!-- TELA 1 MOBILE: VISÃO GERAL -->
+                <div id="mobile-dashboard" class="mobile-subview active">
+                    <h4 style="color: #2c3e50; margin-top: 0;">Estoque Estimado</h4>
+                    <div class="mobile-card">
+                        <span class="status-badge">Aguardando Auditoria do Dia</span>
+                        <h2 style="color: #2980b9; margin: 5px 0;">2 Caixas</h2>
+                        <p style="margin: 0; font-weight: bold; color: #34495e;">Ovos Brancos (Cx 30)</p>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #7f8c8d; text-align: center;">Vá até a aba de Auditoria abaixo para atualizar as quantidades reais do seu comércio.</p>
+                </div>
+
+                <!-- TELA 2 MOBILE: NOVA AUDITORIA (O Coração da sua Nova Ideia) -->
+                <div id="mobile-audit" class="mobile-subview">
+                    <h4 style="color: #2c3e50; margin-top: 0;">Iniciar Auditoria Física</h4>
+                    
+                    <div class="mobile-card" style="text-align: left;">
+                        <div class="form-group">
+                            <label>1. Selecione o Tipo de Produto</label>
+                            <select id="audit-product-select" onchange="updateAuditEstimate()">
+                                <option value="ovos">Ovos Brancos (Caixa com 30)</option>
+                                <option value="vacina">Vacina Bovina (Frasco Doses)</option>
+                                <option value="leite">Leite Integral (Caixa com 12)</option>
+                            </select>
+                        </div>
+
+                        <!-- Mostra o que o sistema acha que tem, baseado no tipo selecionado -->
+                        <div class="audit-info-box">
+                            📊 Estimativa atual do sistema: <strong id="audit-estimate-val">2 Caixas</strong>
+                        </div>
+
+                        <div class="form-group">
+                            <label>2. Quantidade Real na Prateleira (Contagem Física)</label>
+                            <input type="number" id="audit-real-input" placeholder="Conte o produto físico e digite aqui" min="0">
+                        </div>
+
+                        <button class="btn-action btn-success" onclick="processarAuditoria()">Enviar Auditoria</button>
+                    </div>
+                </div>
+
+                <!-- TELA 3 MOBILE: RELATÓRIOS LOCAIS -->
+                <div id="mobile-relatorios" class="mobile-subview">
+                    <h4 style="color: #2c3e50; margin-top: 0;">Histórico de Auditorias</h4>
+                    <div class="mobile-card">
+                        <table style="font-size: 0.8rem; margin-top: 0;">
+                            <thead style="background: #ecf0f1;"><tr><th>Item</th><th>Informado</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td>Ovos Brancos</td><td>2 Caixas</td><td style="color: #27ae60;">Sincronizado</td></tr>
+                                <tr><td>Vacina Bovina</td><td>15 Doses</td><td style="color: #27ae60;">Sincronizado</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
+
+            <!-- BOTTOM NAVIGATION -->
+            <div class="mobile-bottom-nav">
+                <div class="mobile-nav-item active" onclick="switchMobileMenu('dashboard', this)">
+                    <span class="nav-icon">🏠</span>Início
+                </div>
+                <div class="mobile-nav-item" onclick="switchMobileMenu('audit', this)">
+                    <span class="nav-icon">🔎</span>Auditar
+                </div>
+                <div class="mobile-nav-item" onclick="switchMobileMenu('relatorios', this)">
+                    <span class="nav-icon">📊</span>Histórico
+                </div>
+            </div>
+
         </div>
     </div>
 
+    <!-- Scripts de Navegação e Lógica de Auditoria -->
     <script>
-        // Alternar entre a Visão da Empresa (ERP) e do Cliente (Mobile)
         function switchMainView(viewName, btnElement) {
             document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
@@ -209,12 +237,39 @@
             btnElement.classList.add('active');
         }
 
-        // Alternar entre as telas do Menu Lateral dentro do ERP
         function switchMenu(subviewName, menuElement) {
             document.querySelectorAll('.subview').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             document.getElementById('subview-' + subviewName).classList.add('active');
             menuElement.classList.add('active');
+        }
+
+        function switchMobileMenu(mobileSubviewName, navElement) {
+            document.querySelectorAll('.mobile-subview').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+            document.getElementById('mobile-' + mobileSubviewName).classList.add('active');
+            navElement.classList.add('active');
+        }
+
+        // Lógica para alterar o texto explicativo conforme o tipo do produto muda na auditoria
+        function updateAuditEstimate() {
+            const select = document.getElementById('audit-product-select').value;
+            const estimateText = document.getElementById('audit-estimate-val');
+            
+            if (select === 'ovos') { estimateText.innerText = '2 Caixas'; }
+            else if (select === 'vacina') { estimateText.innerText = '15 Doses'; }
+            else if (select === 'leite') { estimateText.innerText = '10 Caixas'; }
+        }
+
+        // Executa a conferência da auditoria
+        function processarAuditoria() {
+            const qtdReal = document.getElementById('audit-real-input').value;
+            if(qtdReal === "") {
+                alert("Por favor, insira a quantidade contada na prateleira.");
+                return;
+            }
+            alert("Auditoria processada com sucesso! O estoque real de " + qtdReal + " unidades foi gravado. O back-end centralizado recalculou a rota de entrega.");
+            document.getElementById('audit-real-input').value = "";
         }
     </script>
 </body>
